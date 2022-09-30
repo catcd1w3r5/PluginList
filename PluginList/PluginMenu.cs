@@ -1,6 +1,8 @@
 ﻿using System.Collections.Immutable;
 using System.Text;
 using Nyan;
+using Nyan.Plugins;
+using Nyan.Types;
 
 namespace PluginList;
 
@@ -8,35 +10,31 @@ public class PluginMenu : NyanPlugin
 {
     private ImmutableArray<NyanPlugin> _plugins;
 
-    public PluginMenu()
+    public PluginMenu() : base("com.Catcd.pluginMenu")
     {
-        ID = "com.Catcd.pluginMenu";
         Name = "Plugin Menu";
         Author = "Catcd";
         Description = "A plugin that adds a menu of all the plugins in nyan";
-        Version = new Version(0, 0, 1);
-        ReleaseVersion = ReleaseVersion.Development;
+        Version = "0.0.1 dev";
     }
 
     protected override Task OnRegister(NyanBot nyan)
     {
         _plugins = nyan.Plugins;
-        ConsoleApplication.Instance?.commands.RegisterCommand("pluginMenu", ShowList);
-
-
+        BotInstance.Instance.commands.RegisterCommand("pluginList", ShowList);
         return Task.CompletedTask;
     }
 
-    private Task ShowList(string args, Response response)
+    private Task ShowList(ReadOnlySpan<char> args, Response response)
     {
         var sb = new StringBuilder();
         foreach (var nyanPlugin in _plugins)
         {
-            sb.AppendLine("Id: " + nyanPlugin.ID);
-            sb.AppendLine("Plugin: " + nyanPlugin.Name);
-            sb.AppendLine("Description: " + nyanPlugin.Description);
-            sb.AppendLine("Author: " + nyanPlugin.Author);
-            sb.AppendLine("Version: " + nyanPlugin.VersionString);
+            sb.AppendLine($"Id: {nyanPlugin.Id}");
+            sb.AppendLine($"Plugin: {nyanPlugin.Name}");
+            sb.AppendLine($"Description: {nyanPlugin.Description}");
+            sb.AppendLine($"Author: {nyanPlugin.Author}");
+            sb.AppendLine($"Version: {nyanPlugin.Version}");
             sb.AppendLine(" ");
         }
 

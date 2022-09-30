@@ -8,7 +8,7 @@
 
     <ItemGroup>
       <Reference Include="Nyan, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-        <HintPath>D:\Projects\C#\Nyan\Nyan\bin\Release\net6.0\win-x64\Nyan.dll</HintPath>
+        <HintPath>..\..\Nyan\Nyan\obj\Release\net6.0\Nyan.dll</HintPath>
       </Reference>
     </ItemGroup>
 </Project>
